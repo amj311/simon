@@ -196,8 +196,16 @@ div.menuView {
     padding: 0.5em;
 }
 
+#userConsole:not(.playerTurn)::after {
+    content: "Pay Attention!";
+    position: absolute;
+    top: calc(50% - 1em);
+    font-size: 1.3rem;
+}
+
 #userConsole:not(.playerTurn) div.button {
     pointer-events: none;
+    opacity: .5;
 }
 
 #gameOver {

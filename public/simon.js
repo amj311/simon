@@ -235,7 +235,6 @@ var game = new Vue ({
         },
     },
     
-    
     computed: {
         nameIsGood() {
             return this.nameQuery.length > 0

@@ -122,7 +122,7 @@ var game = new Vue ({
             this.screenBgURL = this.bgURLS.hypno;
             this.showSimonColor = false;
             this.simonMessage = "Round " + this.round;
-            setTimeout( game.doSimonTurn, 1000 )
+            setTimeout( game.doSimonTurn, 2000 )
         },
         
         doSimonTurn(){
@@ -133,10 +133,8 @@ var game = new Vue ({
         
         playSimonSeq(done) {
             let playing = this.gameState === "playing";
+            
             if (playing && game.ctDwn > 0){
-                console.log(this.ctDwn, this.simonMessage)
-
-                    
                 this.screenBgURL = this.bgURLS.static;
                 game.showSimonColor = false;
 

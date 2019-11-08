@@ -10,7 +10,7 @@ var game = new Vue ({
     el: '#game',
     
     data: {
-        gameName: "Screen Slaver",
+        gameName: "Clement Says",
         GAME_STATES: ["loading","login","menu","playing","lost","scores"],
         gameState: "loading",
         playerTurn: false,
@@ -74,7 +74,7 @@ var game = new Vue ({
             // MAIN
             if (this.gameState === this.GAME_STATES[2]){
                 this.simonMessage = this.gameName;
-                this.screenBgURL = this.bgURLS.hypno;
+                this.screenBgURL = this.bgURLS.static;
             }
             // PLAYING
             if (this.gameState === this.GAME_STATES[3]){

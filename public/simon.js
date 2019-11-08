@@ -108,6 +108,7 @@ var game = new Vue ({
         },
         
         startGame(){
+            this.currentScore
             this.gameState = this.GAME_STATES[3]
             this.playerTurn = false;
             this.simonSeq = []
@@ -227,7 +228,7 @@ var game = new Vue ({
             };
             
             let funcs = [
-                function() { return 100 * game.round; },
+                function() { return 100; },
                 function() { return 10 * game.numColors; },
                 function() { return Math.round(10000 * (1 / game.simonSpeed)) },
             ]

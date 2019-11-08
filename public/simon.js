@@ -111,9 +111,17 @@ var game = new Vue ({
             this.gameState = this.GAME_STATES[3]
             this.playerTurn = false;
             this.simonSeq = []
-            this.round = 1;
+            this.round = 0;
             
-            this.doSimonTurn()
+            this.startNewRound()
+        },
+        
+        startNewRound(){
+            this.round++
+            this.screenBgURL = this.bgURLS.hypno;
+            this.showSimonColor = false;
+            this.simonMessage = "Round " + this.round;
+            setTimeout( game.doSimonTurn, 1000 )
         },
         
         doSimonTurn(){
@@ -127,10 +135,12 @@ var game = new Vue ({
             if (playing && game.ctDwn > 0){
                 console.log(this.ctDwn, this.simonMessage)
 
+                    
+                this.screenBgURL = this.bgURLS.static;
+                game.showSimonColor = false;
+
                 game.simonMessage = game.ctDwn
 
-                console.log(this.ctDwn, this.simonMessage)
-                game.showSimonColor = false;
                 game.ctDwn--
                 setTimeout( game.playSimonSeq, game.simonSpeed )
             }
@@ -168,6 +178,7 @@ var game = new Vue ({
         onUserAttempt(colorIdx){
             
             this.swapSimonColor(this.allColors[colorIdx])
+            console.log(this.allColors[colorIdx])
             
             let atmptIdx = this.userAttempt.length;
             this.userAttempt.push(colorIdx)
@@ -180,10 +191,7 @@ var game = new Vue ({
                 console.log('good job!')
                 
                 if (atmptIdx === this.simonSeq.length - 1) {
-                    console.log('round complete')
-                    this.playerTurn = false;
-                    this.round++
-                    setTimeout(function() { game.doSimonTurn() }, 2000);
+                    this.onWin()
                 }
             }
             else {
@@ -191,6 +199,53 @@ var game = new Vue ({
             }
         },
         
+        onWin(){
+            console.log('round complete')
+            this.playerTurn = false;
+            
+            let scoreAddDuration = 100;
+            let totalDuration = 0;
+            
+            //play animation!
+            totalDuration += 1000;
+            
+            
+            //AWARDING POINTS        
+            
+            function addToScore(points){
+                let toAdd = Math.round(points)
+                
+                for(let pt = 1; pt < toAdd; pt++){
+                    setTimeout(
+                        function(){
+                            game.currentScore++
+                            totalDuration++
+                            game.simonMessage = `Score: ${game.currentScore}`;
+                        }, 1
+                    )
+                }
+            };
+            
+            let funcs = [
+                function() { return 100 * game.round; },
+                function() { return 10 * game.numColors; },
+                function() { return Math.round(10000 * (1 / game.simonSpeed)) },
+            ]
+            
+            setTimeout( function(){
+                
+                for(let i = 0; i < funcs.length; i++){
+                    addToScore( funcs[i]() );
+                }
+                    
+            }, totalDuration)
+            
+            
+            setTimeout( game.startNewRound, totalDuration + 1000);
+        },
+        
+        awardPoints(){
+        },
         
         onLose(){
             console.log('GAME OVER!')

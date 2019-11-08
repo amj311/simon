@@ -164,7 +164,7 @@ var game = new Vue ({
             if(this.gameState === "playing"){
                 this.simonColor = "#000"
                 game.showSimonColor = true;
-                setTimeout( function(){ game.simonColor = colorString }, 50 )
+                setTimeout( function(){ game.simonColor = colorString }, 100 )
             }
         },
         
